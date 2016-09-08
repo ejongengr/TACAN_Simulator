@@ -41,7 +41,7 @@ Manual
 
 3. Outlook
 
-    ![Image of TACAN simulator](./xrb_simulatoin.JPG)
+    ![Image of TACAN simulator](./xrb_simulation.JPG)
 
 License
 -------
