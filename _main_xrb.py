@@ -1,15 +1,17 @@
-from PyQt4 import QtGui
+from PyQt5.QtWidgets import (
+#from PyQt4.QtGui import (
+    QApplication
+    )
 import sys
 import threading
 
 #my class
-import exmod
 import xrb_datareader
 import xrb_sliders
 import xrb_scope_matplot
 
 def main():
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
 
     # Data Reader
     dr = xrb_datareader.DataReader()

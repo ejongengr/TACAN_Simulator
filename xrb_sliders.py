@@ -1,8 +1,17 @@
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore
+#from PyQt4 import QtCore
+from PyQt5.QtWidgets import (
+#from PyQt4.QtGui import (
+    QApplication, QWidget, QVBoxLayout, QPushButton, QLabel,
+	QGridLayout, QCheckBox, QComboBox, QScrollArea, QStatusBar,
+    QGroupBox, QSpinBox, QDoubleSpinBox, QSlider, QDial, QBoxLayout,
+    QHBoxLayout, QLineEdit
+    )
+
 import sys
 
 
-class SlidersGroup(QtGui.QGroupBox):
+class SlidersGroup(QGroupBox):
 
     valueChanged = QtCore.pyqtSignal(int)
 
@@ -12,27 +21,27 @@ class SlidersGroup(QtGui.QGroupBox):
         self.name = name
         self.value = 0.0
         
-        valueLabel = QtGui.QLabel("Current value:")
-        #self.valueSpinBox = QtGui.QDoubleSpinBox ()
-        self.valueSpinBox = QtGui.QSpinBox ()
+        valueLabel = QLabel("Current value:")
+        #self.valueSpinBox = QDoubleSpinBox ()
+        self.valueSpinBox = QSpinBox()
         self.valueSpinBox.setSingleStep(1)
         self.valueSpinBox.setFocusPolicy(QtCore.Qt.StrongFocus)
         
-        self.slider = QtGui.QSlider(orientation)
+        self.slider = QSlider(orientation)
         self.slider.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.slider.setTickPosition(QtGui.QSlider.TicksBothSides)
+        self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(10)
         self.slider.setSingleStep(1)
 
-        self.dial = QtGui.QDial()
+        self.dial = QDial()
         self.dial.setFocusPolicy(QtCore.Qt.StrongFocus)
 
         self.slider.valueChanged.connect(self.setValue)
         self.dial.valueChanged.connect(self.setValue)
         
-        direction = QtGui.QBoxLayout.TopToBottom
+        direction = QBoxLayout.TopToBottom
 
-        slidersLayout = QtGui.QBoxLayout(direction)
+        slidersLayout = QBoxLayout(direction)
         slidersLayout.addWidget(valueLabel)
         slidersLayout.addWidget(self.valueSpinBox)
         slidersLayout.addWidget(self.slider)
@@ -55,7 +64,7 @@ class SlidersGroup(QtGui.QGroupBox):
         self.dial.setMaximum(value)    
 
 
-class Window(QtGui.QWidget):
+class Window(QWidget):
     def __init__(self, dr):
         super(Window, self).__init__()
         
@@ -67,7 +76,7 @@ class Window(QtGui.QWidget):
         self.setWindowTitle('xRB Simulation')
         self.setGeometry(20,50,330,250)
 
-        self.vbox_top = QtGui.QVBoxLayout()
+        self.vbox_top = QVBoxLayout()
         
         # 1
         self.w15Hz = SlidersGroup(QtCore.Qt.Horizontal, "15Hz", "15Hz Offset")
@@ -98,60 +107,60 @@ class Window(QtGui.QWidget):
         self.vbox_top.addWidget(self.arb)
         
         #5
-        self.cb_xrb = QtGui.QCheckBox("NRB,ARB move together", self)
+        self.cb_xrb = QCheckBox("NRB,ARB move together", self)
         self.cb_xrb.setCheckState(2)
         self.vbox_top.addWidget(self.cb_xrb)
         
         #6
-        self.hb1 = QtGui.QHBoxLayout()
-        self.nrbLabel = QtGui.QLabel("NRB:")
-        self.z15Label = QtGui.QLabel("15Hz Zero-cross")
-        self.b15Label = QtGui.QLabel("15Hz Bearing")
+        self.hb1 = QHBoxLayout()
+        self.nrbLabel = QLabel("NRB:")
+        self.z15Label = QLabel("15Hz Zero-cross")
+        self.b15Label = QLabel("15Hz Bearing")
         self.hb1.addWidget(self.nrbLabel)
         self.hb1.addWidget(self.z15Label)
         self.hb1.addWidget(self.b15Label)
         self.vbox_top.addLayout(self.hb1)
 
-        self.hb2 = QtGui.QHBoxLayout()
-        self.text_nrb = QtGui.QLineEdit()
-        self.text_z15 = QtGui.QLineEdit()
-        self.text_b15 = QtGui.QLineEdit()
+        self.hb2 = QHBoxLayout()
+        self.text_nrb = QLineEdit()
+        self.text_z15 = QLineEdit()
+        self.text_b15 = QLineEdit()
         self.hb2.addWidget(self.text_nrb)
         self.hb2.addWidget(self.text_z15)
         self.hb2.addWidget(self.text_b15)
         self.vbox_top.addLayout(self.hb2)
 
-        self.hb3 = QtGui.QHBoxLayout()       
-        self.arbLabel = QtGui.QLabel("ARB:")
-        self.z135Label = QtGui.QLabel("135Hz Zero-cross:")
-        self.b135Label = QtGui.QLabel("135Hz Bearing:")
+        self.hb3 = QHBoxLayout()       
+        self.arbLabel = QLabel("ARB:")
+        self.z135Label = QLabel("135Hz Zero-cross:")
+        self.b135Label = QLabel("135Hz Bearing:")
         self.hb3.addWidget(self.arbLabel)
         self.hb3.addWidget(self.z135Label)
         self.hb3.addWidget(self.b135Label)
         self.vbox_top.addLayout(self.hb3)
 
-        self.hb4 = QtGui.QHBoxLayout()       
-        self.text_arb = QtGui.QLineEdit()
-        self.text_z135 = QtGui.QLineEdit()
-        self.text_b135 = QtGui.QLineEdit()
+        self.hb4 = QHBoxLayout()       
+        self.text_arb = QLineEdit()
+        self.text_z135 = QLineEdit()
+        self.text_b135 = QLineEdit()
         self.hb4.addWidget(self.text_arb)
         self.hb4.addWidget(self.text_z135)
         self.hb4.addWidget(self.text_b135)
         self.vbox_top.addLayout(self.hb4)
 
-        self.hb5 = QtGui.QHBoxLayout()       
-        self.cntLabel = QtGui.QLabel("ARB Count:")
-        self.bearLabel = QtGui.QLabel("Bearing_org:")
-        self.bearingLabel = QtGui.QLabel("Bearing:")
+        self.hb5 = QHBoxLayout()       
+        self.cntLabel = QLabel("ARB Count:")
+        self.bearLabel = QLabel("Bearing_org:")
+        self.bearingLabel = QLabel("Bearing:")
         self.hb5.addWidget(self.cntLabel)
         self.hb5.addWidget(self.bearLabel)
         self.hb5.addWidget(self.bearingLabel)
         self.vbox_top.addLayout(self.hb5)
         
-        self.hb6 = QtGui.QHBoxLayout()       
-        self.text_cnt = QtGui.QLineEdit()
-        self.text_bear = QtGui.QLineEdit()
-        self.text_bearing = QtGui.QLineEdit()
+        self.hb6 = QHBoxLayout()       
+        self.text_cnt = QLineEdit()
+        self.text_bear = QLineEdit()
+        self.text_bearing = QLineEdit()
         self.updateBearing()
         self.hb6.addWidget(self.text_cnt)
         self.hb6.addWidget(self.text_bear)
@@ -159,17 +168,17 @@ class Window(QtGui.QWidget):
         self.vbox_top.addLayout(self.hb6)
 
         # Push Button
-        self.hb7 = QtGui.QHBoxLayout()       
-        self.btn_test=QtGui.QPushButton('Test', self)
+        self.hb7 = QHBoxLayout()       
+        self.btn_test=QPushButton('Test', self)
         self.hb7.addWidget(self.btn_test)
-        self.btn_save=QtGui.QPushButton('Save', self)
+        self.btn_save=QPushButton('Save', self)
         self.hb7.addWidget(self.btn_save)
         self.vbox_top.addLayout(self.hb7)
 
         #result
-        # self.resultLabel = QtGui.QLabel("Test Result:")
+        # self.resultLabel = QLabel("Test Result:")
         # self.vbox_top.addWidget(self.resultLabel)
-        # self.text_result = QtGui.QLineEdit()
+        # self.text_result = QLineEdit()
         # self.vbox_top.addWidget(self.text_result)
         
         #Add layout
@@ -225,7 +234,7 @@ class Window(QtGui.QWidget):
         self.dr.gui_save()
 
     def closeEvent(self, event):
-        print "Closing GUI"
+        print("Closing GUI")
         sys.exit()
 
     def HoldGraph(self):
@@ -241,7 +250,7 @@ if __name__ == '__main__':
 
     import sys
 
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     window = Window()
     window.show()
     sys.exit(app.exec_())

@@ -12,8 +12,6 @@ import numpy as np
 import os.path
 import threading
 
-import exmod
-
 NRB_HEIGHT = 1.4
 ARB_HEIGHT = 1.2
 
@@ -68,7 +66,7 @@ class DataReader():
         if not self.hold:
             self.hold = True
             holded = True
-        print "graph hold"
+        print("graph hold")
         
         if not os.path.isfile(self.filename):
             f = open(self.filename, 'ab') # without b extra carriage return saved
@@ -87,7 +85,7 @@ class DataReader():
                         self.ave_buffer[idx]])
         if holded == True:
             self.hold = False
-        print "save done"
+        print("save done")
         
     # update data
     def update(self, name, offset): 
@@ -122,7 +120,7 @@ class DataReader():
             for n in range(self.maxLen):
                 self.arb_buf[n] = 0
 
-            nn = range(0, self.nrb_offset - 20)
+            nn = list(range(0, self.nrb_offset - 20))
             for n in nn:
                 if (n - offset) % 40 == 0:    # ARB
                     self.arb_buf[n] =  ARB_HEIGHT
@@ -132,7 +130,7 @@ class DataReader():
             start = self.nrb_offset + 20
             if start >= self.maxLen:
                 start = self.maxLen
-            nn = range(self.nrb_offset + 20, self.maxLen)
+            nn = list(range(self.nrb_offset + 20, self.maxLen))
             for n in nn:
                 if (n - offset) % 40 == 0:    # ARB
                     self.arb_buf[n] =  ARB_HEIGHT
