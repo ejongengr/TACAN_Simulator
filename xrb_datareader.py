@@ -167,7 +167,7 @@ class DataReader():
             
         return (self.nrb, z15, b15, self.arb_offset%40, z135, b135, count, bearing_org, bearing)
 
-    def DegDiff(deg1, deg2, modular=360):
+    def DegDiff(self, deg1, deg2, modular=360):
         """
            deg1, deg2 : degree
            return: result = (deg1-deg2)
