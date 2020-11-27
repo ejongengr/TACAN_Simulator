@@ -6,7 +6,6 @@
 """
 
 import csv
-import ee
 import math
 import numpy as np
 import os.path
@@ -159,15 +158,55 @@ class DataReader():
         bearing_org = count * 40 + b135%40
         
         # Adjust bearing
-        if (ee.DegDiff(bearing_org, b15) > 20.0):
+        if (self.DegDiff(bearing_org, b15) > 20.0):
             bearing = bearing_org - 40
-        elif (ee.DegDiff(bearing_org, b15) < -20.0):  
+        elif (self.DegDiff(bearing_org, b15) < -20.0):  
             bearing = bearing_org + 40;
         else:
             bearing = bearing_org
             
         return (self.nrb, z15, b15, self.arb_offset%40, z135, b135, count, bearing_org, bearing)
-        
+
+    def DegDiff(deg1, deg2, modular=360):
+        """
+           deg1, deg2 : degree
+           return: result = (deg1-deg2)
+           modular = 360, -180 < result <= 180
+           modular = 40,  -20 < result <= 20
+        """
+
+        if ((deg1 > 720.0) or (deg2 > 720.0)):
+            return None
+        m = 360 / modular
+        if (m == 1):
+            rot = 360.0;
+        else:
+            rot = 40.0;
+
+        # -180 < deg 1 < 180
+        while(deg1 > rot):
+            deg1 -= rot
+        if (deg1 > rot/2):
+            deg1 -= rot
+        if(deg1 < -rot/2):
+            deg1 += rot
+
+        # -180 < deg 2 < 180
+        while(deg2 > rot):
+            deg2 -= rot
+        if (deg2 > rot/2):
+            deg2 -= rot
+        if(deg2 < -rot/2):
+            deg2 += rot
+
+        # -180 < diff < 180
+        diff = deg1 - deg2
+        if (diff > rot/2):
+            diff -= rot
+        if (diff < -rot/2):
+            diff += rot
+        return diff	
+
 def main():
     pass
     
